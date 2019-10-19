@@ -10,7 +10,7 @@ import com.project_management.belfazt.repository.ProjectRepository;
 public class ProjectService {
 
 	@Autowired
-	ProjectRepository projectRepository;
+	private ProjectRepository projectRepository;
 	
 	public Project saveOrUpdateProject(Project project) {
 		
