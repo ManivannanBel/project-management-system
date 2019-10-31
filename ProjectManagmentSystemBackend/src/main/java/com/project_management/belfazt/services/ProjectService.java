@@ -3,8 +3,10 @@ package com.project_management.belfazt.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project_management.belfazt.domain.Backlog;
 import com.project_management.belfazt.domain.Project;
 import com.project_management.belfazt.exceptions.ProjectIdException;
+import com.project_management.belfazt.repository.BacklogRepository;
 import com.project_management.belfazt.repository.ProjectRepository;
 
 @Service
@@ -12,10 +14,28 @@ public class ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepository;
+	@Autowired
+	private BacklogRepository backlogRepository;
 	
 	public Project saveOrUpdateProject(Project project) {
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			
+			//Create Backlog only while creating a project
+			if(project.getId() == null) {
+				//Create backlog table
+				Backlog backlog = new Backlog();
+				//Create relationship
+				project.setBacklog(backlog);
+				backlog.setProject(project);
+				backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			}
+			
+			//While updating the project
+			if(project.getId() != null) {
+				project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+			}
+			
 			return projectRepository.save(project);			
 		}catch (Exception e) {
 			throw new ProjectIdException("Project ID '"+ project.getProjectIdentifier().toUpperCase() + "' already exists");
