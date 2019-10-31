@@ -27,6 +27,7 @@ public class Project {
 	@Column(updatable = false, unique = true)
 	private String projectIdentifier;
 	@NotBlank(message = "Project description should not be empty")
+	@Size(max=255, message = "Project description is too long")
 	private String description;
 	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date start_date;
