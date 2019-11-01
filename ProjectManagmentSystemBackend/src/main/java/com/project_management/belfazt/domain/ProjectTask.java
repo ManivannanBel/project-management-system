@@ -39,14 +39,6 @@ public class ProjectTask {
 	@JsonIgnore
 	private Backlog backlog; 
 	
-	public Backlog getBacklog() {
-		return backlog;
-	}
-
-	public void setBacklog(Backlog backlog) {
-		this.backlog = backlog;
-	}
-
 	@Column(updatable = false)
 	private String projectIdentifier;
 	
@@ -144,6 +136,14 @@ public class ProjectTask {
 
 	public void setUpdate_At(Date update_At) {
 		this.update_At = update_At;
+	}
+	
+	public Backlog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(Backlog backlog) {
+		this.backlog = backlog;
 	}
 
 	@Override
