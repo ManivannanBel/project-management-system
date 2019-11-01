@@ -72,32 +72,40 @@ public class ProjectTaskService {
 		public ProjectTask findProjectTaskByProjectSequence(String backlogId, String projectSequence) {
 			
 			//make sure PT is searched on existing backlog
-			Backlog backlog = backlogRepository.findByProjectIdentifier(backlogId);
+			Backlog backlog = backlogRepository.findByProjectIdentifier(backlogId.toUpperCase());
 			if(backlog == null) {
-				throw new ProjectNotFoundException("Project with ID: '"+backlogId+"' does not exists");
+				throw new ProjectNotFoundException("Project with ID: '"+backlogId.toUpperCase()+"' does not exists");
 			}
 			
 			//make sure the task exists
-			ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
+			ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence.toUpperCase());
 			if(projectTask == null) {
-				throw new ProjectNotFoundException("Project task  '"+projectSequence+"'  not found");
+				throw new ProjectNotFoundException("Project task  '"+projectSequence.toUpperCase()+"'  not found");
 			}
 			
 			//make sure PT searched on the correct backlog
-			if(!projectTask.getProjectIdentifier().equals(backlogId)) {
-				throw new ProjectNotFoundException("Project task  '"+projectSequence+"'  not exist in the project "+backlogId);
+			if(!projectTask.getProjectIdentifier().equals(backlogId.toUpperCase())) {
+				throw new ProjectNotFoundException("Project task  '"+projectSequence.toUpperCase()+"'  not exist in the project "+backlogId.toUpperCase());
 			}
 			
-			return projectTaskRepository.findByProjectSequence(projectSequence);
+			return projectTaskRepository.findByProjectSequence(projectSequence.toUpperCase());
 		}
 		
 		public ProjectTask updateProjectTaskByProjectSequence(ProjectTask updatedTask, String projectIdentifier, String projectSequence) {
 			
-			ProjectTask projectTask = projectTaskRepository.findByProjectSequence(updatedTask.getProjectSequence());
+			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);
 			
 			projectTask = updatedTask;
 			
 			return projectTaskRepository.save(projectTask);
+		}
+		
+		public void deleteProjectTaskByProjectSequence(String projectIdentifier, String projectSequence) {
+			
+			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);
+			
+			projectTaskRepository.delete(projectTask);
+			
 		}
 
 }
