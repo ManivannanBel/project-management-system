@@ -10,6 +10,7 @@ import com.project_management.belfazt.domain.ProjectTask;
 @Repository
 public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long>{
 	
-	List<ProjectTask> findBacklogByProjectIdentifier(String projectIdentifier);
-	
+	List<ProjectTask> findByProjectIdentifierOrderByPriority(String projectIdentifier);
+
+	ProjectTask findByProjectSequence(String projectSequence);
 }
