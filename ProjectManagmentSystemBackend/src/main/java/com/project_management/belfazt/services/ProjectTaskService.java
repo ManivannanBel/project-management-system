@@ -3,13 +3,13 @@ package com.project_management.belfazt.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project_management.belfazt.domain.Backlog;
-import com.project_management.belfazt.domain.Project;
-import com.project_management.belfazt.domain.ProjectTask;
+import com.project_management.belfazt.dao.BacklogRepository;
+import com.project_management.belfazt.dao.ProjectRepository;
+import com.project_management.belfazt.dao.ProjectTaskRepository;
 import com.project_management.belfazt.exceptions.ProjectNotFoundException;
-import com.project_management.belfazt.repository.BacklogRepository;
-import com.project_management.belfazt.repository.ProjectRepository;
-import com.project_management.belfazt.repository.ProjectTaskRepository;
+import com.project_management.belfazt.model.Backlog;
+import com.project_management.belfazt.model.Project;
+import com.project_management.belfazt.model.ProjectTask;
 
 @Service
 public class ProjectTaskService {

@@ -1,4 +1,4 @@
-package com.project_management.belfazt.domain;
+package com.project_management.belfazt.model;
 
 import java.util.Date;
 

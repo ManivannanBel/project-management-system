@@ -1,4 +1,4 @@
-package com.project_management.belfazt.web;
+package com.project_management.belfazt.controller;
 
 import javax.validation.Valid;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project_management.belfazt.domain.ProjectTask;
+import com.project_management.belfazt.model.ProjectTask;
 import com.project_management.belfazt.services.ProjectTaskService;
 import com.project_management.belfazt.services.ValidationErrorService;
 
