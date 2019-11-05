@@ -17,7 +17,6 @@ class Dashboard extends Component {
         const {projects} = this.props.project
 
         return (
-            <div>
             <div className="projects">
             <div className="container">
                 <div className="row">
@@ -33,7 +32,6 @@ class Dashboard extends Component {
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         )
     }

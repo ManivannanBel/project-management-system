@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './Components/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import AddProject from './Components/Project/AddProject';
@@ -10,9 +9,11 @@ import store from './store';
 import UpdateProject from './Components/Project/UpdateProject';
 import ProjectBoard from "./Components/ProjectBoard/ProjectBoard";
 import AddProjectTask from './Components/ProjectBoard/ProjectTasks/AddProjectTask';
+import Dashboard from './Components/Dashboard';
 
 function App() {
   return (
+    <React.Fragment>
     <Provider store={store}>
     <Router>
       <div className="App">
@@ -25,6 +26,7 @@ function App() {
       </div>
     </Router>
     </Provider>
+    </React.Fragment>
   );
 }
 
