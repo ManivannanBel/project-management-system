@@ -33,6 +33,9 @@ public class ProjectTaskService {
 			Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
 			
 			try {
+				
+				projectIdentifier = projectIdentifier.toUpperCase();
+				
 				//set backlog to projectTask
 				projectTask.setBacklog(backlog);
 				//Get the project sequence from backlog
@@ -67,23 +70,25 @@ public class ProjectTaskService {
 			
 			//Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
 			
-			projectService.findProjectByIdentifier(projectIdentifier, username);
+			projectService.findProjectByIdentifier(projectIdentifier.toUpperCase(), username);
 			
 			//No need to check for project null, because of projectService where it is already checked
 			/*if(project == null) {
 				throw new ProjectNotFoundException("Project with ID: '"+projectIdentifier+"' does not exists");
 			}*/
 			
-			return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
+			return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier.toUpperCase());
 		}
 		
-		public ProjectTask findProjectTaskByProjectSequence(String backlogId, String projectSequence) {
+		public ProjectTask findProjectTaskByProjectSequence(String backlogId, String projectSequence, String username) {
 			
 			//make sure PT is searched on existing backlog
-			Backlog backlog = backlogRepository.findByProjectIdentifier(backlogId.toUpperCase());
-			if(backlog == null) {
+			//X--XBacklog backlog = backlogRepository.findByProjectIdentifier(backlogId.toUpperCase());
+			projectService.findProjectByIdentifier(backlogId.toUpperCase(), username);
+			//Everything is prechecked in above project service
+			/*if(backlog == null) {
 				throw new ProjectNotFoundException("Project with ID: '"+backlogId.toUpperCase()+"' does not exists");
-			}
+			}*/
 			
 			//make sure the task exists
 			ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence.toUpperCase());
@@ -99,18 +104,18 @@ public class ProjectTaskService {
 			return projectTaskRepository.findByProjectSequence(projectSequence.toUpperCase());
 		}
 		
-		public ProjectTask updateProjectTaskByProjectSequence(ProjectTask updatedTask, String projectIdentifier, String projectSequence) {
+		public ProjectTask updateProjectTaskByProjectSequence(ProjectTask updatedTask, String projectIdentifier, String projectSequence, String username) {
 			
-			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);
+			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier.toUpperCase(), projectSequence.toUpperCase(), username);
 			
 			projectTask = updatedTask;
 			
 			return projectTaskRepository.save(projectTask);
 		}
 		
-		public void deleteProjectTaskByProjectSequence(String projectIdentifier, String projectSequence) {
+		public void deleteProjectTaskByProjectSequence(String projectIdentifier, String projectSequence, String username) {
 			
-			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);
+			ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier.toUpperCase(), projectSequence.toUpperCase(), username);
 			
 			projectTaskRepository.delete(projectTask);
 			

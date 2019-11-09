@@ -107,10 +107,10 @@ public class ProjectService {
 	
 	public void deleteProjectByIdentifier(String projectId, String username) {
 		//Get the user's project by identifier
-		Project project = findProjectByIdentifier(projectId, username);
+		Project project = findProjectByIdentifier(projectId.toUpperCase(), username);
 		
 		if(project == null) {
-			throw new ProjectIdException("Project ID not "+ projectId +" found");
+			throw new ProjectIdException("Project ID not "+ projectId.toUpperCase() +" found");
 		}
 		
 		//Delete the project
