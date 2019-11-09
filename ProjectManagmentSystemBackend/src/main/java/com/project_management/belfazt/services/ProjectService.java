@@ -43,10 +43,11 @@ public class ProjectService {
 			
 			Project existingProject = findProjectByIdentifier(project.getProjectIdentifier(), username);
 			
-			System.out.println(project.toString() + " " + existingProject.toString());
-			
+			//Check if leader of currently updating project and fetched project are equal
 			if(existingProject != null && !(existingProject.getProjectLeader().equals(username))) {
 				throw new ProjectNotFoundException("The project that you are trying to update is not found");
+			}else if(existingProject == null){
+				throw new ProjectNotFoundException("The project with id '"+ project.getProjectIdentifier() +"' does'nt exists");
 			}
 			
 		}
