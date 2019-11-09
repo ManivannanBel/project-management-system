@@ -4,6 +4,8 @@ import Backlog from './Backlog';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { getBacklog } from '../../actions/backlogActions';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 class ProjectBoard extends Component {
 
@@ -42,6 +44,12 @@ class ProjectBoard extends Component {
                             {errors.projectNotFound}
                         </div>
                     )
+                } else if (errors.projectIdentifier) {
+                    return (
+                        <div className="alert alert-danger text-center" role="alert">
+                            {errors.projectIdentifier}
+                        </div>
+                    )
                 } else {
                     return (
                         <div className="alert alert-info text-center" role="alert">
@@ -61,7 +69,7 @@ class ProjectBoard extends Component {
         return (
           <div className="container">
             <Link to={`/addProjectTask/${id}`} className="btn btn-primary mb-3">
-              <i className="fas fa-plus-circle"> Create Project Task</i>
+              <i className="cool-text"> <FontAwesomeIcon icon={faPlusCircle} /> Create Project Task</i>
             </Link>
             <br />
             <hr />

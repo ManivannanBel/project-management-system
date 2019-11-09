@@ -3,6 +3,9 @@ import {Link} from "react-router-dom";
 import { deleteProject } from "../../actions/projectActions";
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import '../../App.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlagCheckered, faEdit, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 class ProjectItem extends Component {
     
@@ -18,26 +21,26 @@ class ProjectItem extends Component {
                             <div className="card card-body bg-light mb-3">
                                 <div className="row">
                                     <div className="col-2">
-                                        <span className="mx-auto">{project.projectIdentifier}</span>
+                                        <span className="mx-auto pid">{project.projectIdentifier}</span>
                                     </div>
                                     <div className="col-lg-6 col-md-4 col-8">
                                         <h3>{project.projectName}</h3>
-                                        <p>{project.description}</p>
+                                        <p className="cool-text">{project.description}</p>
                                     </div>
                                     <div className="col-md-4 d-none d-lg-block">
                                         <ul className="list-group">
                                             <Link to={`/projectBoard/${ project.projectIdentifier }`}>
-                                                <div>
-                                                    <i className="fa fa-flag-checkered pr-1"> Project Board </i>
-                                                </div>
+                                                <li className="list-group-item board">
+                                                    <i className="cool-text bold-text"> <FontAwesomeIcon icon={faFlagCheckered}/> Project Board </i>
+                                                </li>
                                             </Link>
                                             <Link to={`/updateProject/${project.projectIdentifier}`}>
                                                 <li className="list-group-item update">
-                                                    <i className="fa fa-edit pr-1"> Update Project Info</i>
+                                                    <i className="cool-text bold-text"> <FontAwesomeIcon icon={faEdit}/> Update Project Info</i>
                                                 </li>
                                             </Link>
                                                 <li className="list-group-item delete" onClick={() => this.onDeleteClick(project.projectIdentifier)}>
-                                                    <i className="fa fa-minus-circle pr-1"> Delete Project</i>
+                                                    <i className="cool-text bold-text"> <FontAwesomeIcon icon={faMinusCircle}/> Delete Project</i>
                                                 </li>
                                         </ul>
                                     </div>

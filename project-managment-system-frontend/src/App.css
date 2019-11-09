@@ -63,3 +63,62 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+body {
+  background-color: #e8ecec !important;
+}
+
+.cool-text {
+  margin: 0;
+  font-style: normal;
+  font-family: "Segoe UI"
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.pid {
+  text-align: center;
+  color: rgb(209, 75, 75);
+  font-size: 2rem;
+}
+
+.board {
+  color : rgb(93, 84, 223) !important;
+}
+
+.board:hover {
+  background: rgb(87, 54, 235) !important;
+  color: black !important;
+}
+
+.update:hover {
+  background: rgb(54, 235, 99) !important;
+  color: black !important;
+}
+
+.update {
+  color : rgb(11, 139, 43) !important;
+}
+
+.delete:hover {
+  background: rgb(235, 54, 54) !important;
+  color: black !important;
+}
+
+.delete {
+  color: rgb(235, 54, 54) !important;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
