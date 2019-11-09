@@ -24,4 +24,9 @@ public class CustomResponseEnityExceptionHandler extends ResponseEntityException
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleUsernameAlreadyExists(UsernameAlreadyExistsException exception, WebRequest request){
+		UsernameAlreadyExistsResponse exceptionResponse = new UsernameAlreadyExistsResponse(exception.getMessage());
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 }
