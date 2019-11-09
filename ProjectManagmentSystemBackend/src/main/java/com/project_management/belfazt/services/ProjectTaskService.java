@@ -8,7 +8,6 @@ import com.project_management.belfazt.dao.ProjectRepository;
 import com.project_management.belfazt.dao.ProjectTaskRepository;
 import com.project_management.belfazt.exceptions.ProjectNotFoundException;
 import com.project_management.belfazt.model.Backlog;
-import com.project_management.belfazt.model.Project;
 import com.project_management.belfazt.model.ProjectTask;
 
 @Service
@@ -23,11 +22,17 @@ public class ProjectTaskService {
 		@Autowired
 		private ProjectRepository projectRepository;
 		
-		public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
+		@Autowired
+		private ProjectService projectService;
 		
+		public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {
+
+			//PT to be added to a specific project, project != null, Backlog exists
+			// X---XBacklog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+			//Use project service to get the backlog, because you don't have to check correct user access again in this code
+			Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
+			
 			try {
-				//PT to be added to a specific project, project != null, Backlog exists
-				Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
 				//set backlog to projectTask
 				projectTask.setBacklog(backlog);
 				//Get the project sequence from backlog
@@ -58,13 +63,16 @@ public class ProjectTaskService {
 			}
 		}
 		
-		public Iterable<ProjectTask> findBacklogById(String projectIdentifier){
+		public Iterable<ProjectTask> findBacklogById(String projectIdentifier, String username){
 			
-			Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
+			//Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
 			
-			if(project == null) {
+			projectService.findProjectByIdentifier(projectIdentifier, username);
+			
+			//No need to check for project null, because of projectService where it is already checked
+			/*if(project == null) {
 				throw new ProjectNotFoundException("Project with ID: '"+projectIdentifier+"' does not exists");
-			}
+			}*/
 			
 			return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 		}
