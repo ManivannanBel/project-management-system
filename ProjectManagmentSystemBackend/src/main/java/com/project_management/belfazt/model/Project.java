@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -48,6 +50,13 @@ public class Project {
 	@JsonIgnore
 	private Backlog backlog;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", updatable = false, nullable = false)
+	@JsonIgnore
+	private User user;
+	
+	private String projectLeader;
+	
 	public Project() {
 		super();
 	}
@@ -56,7 +65,15 @@ public class Project {
 	public Long getId() {
 		return id;
 	}
+	
+	public String getProjectLeader() {
+		return projectLeader;
+	}
 
+
+	public void setProjectLeader(String projectLeader) {
+		this.projectLeader = projectLeader;
+	}
 
 
 	public void setId(Long id) {
@@ -169,6 +186,14 @@ public class Project {
 		this.backlog = backlog;
 	}
 	
-	
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	
 }
