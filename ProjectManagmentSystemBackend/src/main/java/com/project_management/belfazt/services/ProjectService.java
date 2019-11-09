@@ -24,6 +24,31 @@ public class ProjectService {
 	
 	public Project saveOrUpdateProject(Project project, String username) {
 		try {
+			
+			/*Issue while updating
+			 *DETAIL, If you update the existing project it will be updated,
+			 *but if you update a project of other user, actually their project is also updated or replaced by current user
+			 *replace in the since we are assigning the current user and project leader through setUser() and setProjectLeader()
+			 *in the below code
+			 *
+			 *SOLUTION,
+			 *	if project.id != null	
+			 *		get the project by projectIdentifier,
+			 *		 if project exists then, check if projectLeader is same as current user
+			 *			if same then update
+			 *		 else
+			 *			don't update
+			 */
+			//Issue fix
+			if(project.getId() != null) {
+				
+				Project existingProject = findProjectByIdentifier(project.getProjectIdentifier(), username);
+				
+				if(existingProject != null && !existingProject.getProjectLeader().equals(username)) {
+					throw new ProjectNotFoundException("The project that you are trying to update is not found");
+				}
+				
+			}
 	
 			User user = userRepository.findByUsername(username);
 			
