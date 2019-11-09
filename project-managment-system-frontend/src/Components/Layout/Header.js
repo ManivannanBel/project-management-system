@@ -27,7 +27,7 @@ class Header extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link onClick={this.logout} className="nav-link" to="/login">
+                <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </li>
