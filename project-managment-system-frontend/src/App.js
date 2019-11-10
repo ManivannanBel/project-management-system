@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
@@ -17,32 +17,37 @@ import Login from './Components/Authentication/Login';
 import jwt_decode from "jwt-decode";
 import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
-import {logout} from "./actions/securityActions";
+import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecuredRoute";
 
+
 const jwtToken = localStorage.jwtToken;
+    console.log("wiilll update")
+    if(jwtToken){
+      setJWTToken(jwtToken);
+      
+      const decodedToken = jwt_decode(jwtToken);
+      console.log(decodedToken)
+      store.dispatch({
+        type : SET_CURRENT_USER,
+        payload : decodedToken
+      });
+    
+      const currentTime = Date.now()/1000;
+      //once token is expired
+      if(decodedToken.exp < currentTime){
+        //handle logout
+        console.log("logout")
+        store.dispatch(logout())
+        window.location.href = "/";
+      }
+    
+    }
 
-if(jwtToken){
-  setJWTToken(jwtToken);
-  
-  const decodedToken = jwt_decode(jwtToken);
-  
-  store.dispatch({
-    type : SET_CURRENT_USER,
-    payload : decodedToken
-  });
+class App extends Component {
 
-  const currentTime = Date.now()/1000;
-  //once token is expired
-  if(decodedToken.exp < currentTime){
-    //handle logout
-    store.dispatch(logout());
-    window.location.href = "/";
-  }
 
-}
-
-function App() {
+  render(){
   return (
     <React.Fragment>
     <Provider store={store}>
@@ -71,6 +76,7 @@ function App() {
     </Provider>
     </React.Fragment>
   );
+      }
 }
 
 export default App;
