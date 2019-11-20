@@ -27,7 +27,7 @@ const jwtToken = localStorage.jwtToken;
       setJWTToken(jwtToken);
       
       const decodedToken = jwt_decode(jwtToken);
-      console.log(decodedToken)
+      //console.log(decodedToken)
       store.dispatch({
         type : SET_CURRENT_USER,
         payload : decodedToken
@@ -37,7 +37,7 @@ const jwtToken = localStorage.jwtToken;
       //once token is expired
       if(decodedToken.exp < currentTime){
         //handle logout
-        console.log("logout")
+        //console.log("logout")
         store.dispatch(logout())
         window.location.href = "/";
       }

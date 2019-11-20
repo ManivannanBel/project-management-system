@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
+		http.cors().and().csrf().disable()	//disable cross-site request forgery
+				//Stateless session for rest service because we need user's state
 				.exceptionHandling().authenticationEntryPoint(unautherizedHandler).and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -73,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				).permitAll()
 				.antMatchers(SIGN_UP_URLS).permitAll()
 				.anyRequest().authenticated();
+		//Filter is added to validate tokens at every requests
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}	
 }

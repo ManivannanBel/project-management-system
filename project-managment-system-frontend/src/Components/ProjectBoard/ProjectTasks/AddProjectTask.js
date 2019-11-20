@@ -23,7 +23,7 @@ class AddProjectTask extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      console.log(nextProps.errors)
+      //console.log(nextProps.errors)
       if(nextProps.errors){
         this.setState({errors : nextProps.errors});
       }
@@ -125,6 +125,7 @@ class AddProjectTask extends Component {
                     <option value="">Select Status</option>
                     <option value="TO_DO">TO DO</option>
                     <option value="IN_PROGRESS">IN PROGRESS</option>
+                    <option value="ON_REVIEW">ON REVIEW</option>
                     <option value="DONE">DONE</option>
                   </select>
                 </div>

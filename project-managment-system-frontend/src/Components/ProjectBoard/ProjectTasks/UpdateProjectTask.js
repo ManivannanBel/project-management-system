@@ -155,6 +155,7 @@ class UpdateProjectTask extends Component {
                     <option value="">Select Status</option>
                     <option value="TO_DO">TO DO</option>
                     <option value="IN_PROGRESS">IN PROGRESS</option>
+                    <option value="ON_REVIEW">ON REVIEW</option>
                     <option value="DONE">DONE</option>
                   </select>
                 </div>

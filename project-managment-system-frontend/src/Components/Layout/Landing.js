@@ -20,8 +20,7 @@ class Landing extends Component {
                   <div className="col-md-12 text-center">
                     <h1 className="display-3 mb-4">Project Management Tool</h1>
                     <p className="lead">
-                      Create your account to join active projects or start you
-                      own
+                      Create your account to use the Kanban workflow management tool for your projects
                     </p>
                     <hr />
                     <Link to="/register" className="btn btn-lg btn-primary mr-2">

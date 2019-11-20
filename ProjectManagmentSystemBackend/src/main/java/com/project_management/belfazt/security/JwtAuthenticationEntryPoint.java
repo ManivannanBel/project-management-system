@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.project_management.belfazt.exceptions.InvalidLoginResponse;
 
+//This class rejects every unauthorized request and sends 401 error code
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
 
@@ -29,6 +30,4 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
 		
 	}
 
-	
-	
 }
