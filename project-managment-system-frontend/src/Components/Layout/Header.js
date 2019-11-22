@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 import {logout} from "../../actions/securityActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
- 
+import { Nav, NavDropdown, Navbar } from "react-bootstrap";
+
 class Header extends Component {
 
     logout = () => {
@@ -15,81 +16,68 @@ class Header extends Component {
 
     render() {
 
-        const {validToken, user} = this.props.security;
+        const { validToken, user } = this.props.security;
 
         const userIsNotAuthenticated = (
-            <div className="collapse navbar-collapse" id="mobile-nav">
-            
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link " to="/register">
-                  Sign in
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )
+          <React.Fragment>
+          <Nav className="mr-auto"></Nav>
+          <Nav>
+            <Nav.Link>
+              <Link className="nav-link " to="/register">
+                Sign in
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </Nav.Link>
+          </Nav>
+          </React.Fragment>
+        );
 
         const userIsAuthenticated = (
-            <div className="collapse navbar-collapse" id="mobile-nav">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/dashboard">
-                  Dashboard
-                </Link>
-              </li>
-            </ul>
-
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link " to="/dashboard">
-                 {<FontAwesomeIcon icon={faUserCircle}/>
-                 }
-                  {` ${user.fullname}`}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link onClick={this.logout} className="nav-link" to="/logout">
-                  Logout
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )
+          <React.Fragment>
+            <Nav className="mr-auto">
+            <Nav.Link>
+              <Link className="nav-link" to="/dashboard">
+                Dashboard
+              </Link>
+            </Nav.Link>
+            </Nav>
+            <Nav>
+            <Nav.Link>
+              <Link className="nav-link " to="/dashboard">
+                {<FontAwesomeIcon icon={faUserCircle} />}
+                {` ${user.fullname}`}
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link onClick={this.logout} className="nav-link" to="/logout">
+                Logout
+              </Link>
+            </Nav.Link>
+          </Nav>
+          </React.Fragment>
+        );
 
         let headerLinks;
 
-        if(validToken && user){
-            headerLinks = userIsAuthenticated
-        }else{
-            headerLinks = userIsNotAuthenticated
+        if (validToken && user) {
+          headerLinks = userIsAuthenticated;
+        } else {
+          headerLinks = userIsNotAuthenticated;
         }
 
         return (
           <div>
-            <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-              <div className="container">
-                <Link className="navbar-brand" to="/">
-                  Project Management Tool
-                </Link>
-                <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#mobile-nav"
-                >
-                  <span className="navbar-toggler-icon" />
-                </button>
-
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+              <Navbar.Brand href="/">Project Management Tool</Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
                 {headerLinks}
-
-              </div>
-            </nav>
+              </Navbar.Collapse>
+            </Navbar>
           </div>
         );
     }
