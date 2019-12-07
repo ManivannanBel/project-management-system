@@ -19,6 +19,7 @@ import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecuredRoute";
+import Profile from './Components/Profile/Profile';
 
 
 const jwtToken = localStorage.jwtToken;
@@ -70,6 +71,7 @@ class App extends Component {
           <SecuredRoute exact path='/projectBoard/:id' component={ProjectBoard} />
           <SecuredRoute exact path='/addProjectTask/:id' component={AddProjectTask}/>
           <SecuredRoute exact path='/updateProjectTask/:id/:ptId' component={UpdateProjectTask}/>
+          <SecuredRoute exact path='/profile' component={Profile}/>
         </Switch>
       </div>
     </Router>

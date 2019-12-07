@@ -8,6 +8,10 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 class Header extends Component {
+    
+    componentDidMount(){
+
+    }
 
     logout = () => {
         this.props.logout();
@@ -24,7 +28,7 @@ class Header extends Component {
           <Nav>
             <Nav.Link>
               <Link className="nav-link " to="/register">
-                Sign in
+                Sign up
               </Link>
             </Nav.Link>
             <Nav.Link>
@@ -47,7 +51,7 @@ class Header extends Component {
             </Nav>
             <Nav>
             <Nav.Link>
-              <Link className="nav-link " to="/dashboard">
+              <Link className="nav-link " to="/profile">
                 {<FontAwesomeIcon icon={faUserCircle} />}
                 {` ${user.fullname}`}
               </Link>
