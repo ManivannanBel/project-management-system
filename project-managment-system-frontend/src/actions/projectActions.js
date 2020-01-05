@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT, GET_TEAM_PROJECTS} from "./types"
+import {GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT, GET_TEAM_PROJECTS, GET_USERNAMES, CLEAR_ERRORS} from "./types"
 
 export const createProject = (project, history) => async dispatch => {
     try{
@@ -68,4 +68,19 @@ export const deleteProject = id => async dispatch => {
             })
         }
     }
+}
+
+export const getUsersForSearchQuery = (query) => async dispatch => {
+    const res = await axios.get(`/api/users/searchQuery/${query}`);
+    dispatch({
+        type : GET_USERNAMES,
+        payload : res.data
+    })
+}
+
+export const resetSearchedUsernames = () => dispatch => {
+    dispatch({
+        type : GET_USERNAMES,
+        payload : []
+    })
 }

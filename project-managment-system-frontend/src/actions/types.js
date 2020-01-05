@@ -12,5 +12,9 @@ export const DELETE_PROJECT_TASK = "DELETE_PROJECT_TASK ";
 //profile
 export const GET_USER_DETAILS = "GET_USER_DETAILS ";
 
+//Username
+export const GET_USERNAMES = "GET_USERNAMES";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
 //Security
 export const SET_CURRENT_USER = "SET_CURRENT_USER ";
