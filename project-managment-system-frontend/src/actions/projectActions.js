@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT} from "./types"
+import {GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT, GET_TEAM_PROJECTS} from "./types"
 
 export const createProject = (project, history) => async dispatch => {
     try{
@@ -21,6 +21,14 @@ export const getProjects = () => async dispatch => {
     const res = await axios.get("/api/project/");
     dispatch({
         type : GET_PROJECTS,
+        payload: res.data
+    })
+}
+
+export const getTeamProjects = () => async dispatch => {
+    const res = await axios.get("/api/project/teamProjects/");
+    dispatch({
+        type : GET_TEAM_PROJECTS,
         payload: res.data
     })
 }

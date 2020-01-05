@@ -1,7 +1,8 @@
-import { GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from "../actions/types";
+import { GET_PROJECTS, GET_PROJECT, DELETE_PROJECT, GET_TEAM_PROJECTS } from "../actions/types";
 
 const initialState = {
   projects: [],
+  teamProjects: [],
   project: {}
 };
 
@@ -12,6 +13,11 @@ export default function(state = initialState, action) {
         ...state,
         projects: action.payload
       };
+    case GET_TEAM_PROJECTS:
+      return {
+        ...state,
+        teamProjects: action.payload
+      }
     case GET_PROJECT:
       return {
         ...state,
