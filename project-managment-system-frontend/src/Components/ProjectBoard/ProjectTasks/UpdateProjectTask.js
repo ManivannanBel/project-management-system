@@ -21,7 +21,8 @@ class UpdateProjectTask extends Component {
           priority: 0,
           dueDate: null,
           projectIdentifier: id,
-          errors: {}
+          errors: {},
+          createdBy: ""
         };
       }
 
@@ -43,6 +44,7 @@ class UpdateProjectTask extends Component {
             status,
             priority,
             dueDate,
+            createdBy
         } = nextProps.projectTask;
 
         this.setState({
@@ -52,6 +54,7 @@ class UpdateProjectTask extends Component {
             status,
             priority,
             dueDate,
+            createdBy
         })
 
         if(nextProps.errors){
@@ -91,11 +94,11 @@ class UpdateProjectTask extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/projectBoard/${projectIdentifier}`} className="btn btn-light">
+              <Link to={`/projectBoard/${projectIdentifier}`} className="btn btn-info mt-3">
                 Back to Project Board
               </Link>
               <h4 className="display-4 text-center">Update Project Task</h4>
-              <p className="lead text-center">Project Name + Project Code</p>
+        <p className="lead text-center">Task created by: {this.state.createdBy}</p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
@@ -104,7 +107,7 @@ class UpdateProjectTask extends Component {
                         "is-invalid" : errors.summary
                       })}
                     name="summary"
-                    placeholder="Project Task summary"
+                    placeholder="Project Task summary"  
                     value={this.state.summary}
                     onChange={this.onChange}
                   />

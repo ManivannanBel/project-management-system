@@ -43,7 +43,7 @@ class AddProjectTask extends Component {
       priority: this.state.priority,
       dueDate: this.state.dueDate
     };
-    console.log(newTask)
+
 
     this.props.addProjectTask(
       this.state.projectIdentifier,
@@ -61,7 +61,7 @@ class AddProjectTask extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={`/projectBoard/${id}`} className="btn btn-light">
+              <Link to={`/projectBoard/${id}`} className="btn btn-info mt-3">
                 Back to Project Board
               </Link>
               <h4 className="display-4 text-center">Add Project Task</h4>

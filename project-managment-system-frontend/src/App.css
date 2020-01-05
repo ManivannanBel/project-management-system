@@ -192,3 +192,10 @@ a:hover {
 .AutoCompleteText li:hover{
   text-decoration: underline;
 }
+
+.team-members{
+  width: 100%;
+}
+
+.team-members td{
+}

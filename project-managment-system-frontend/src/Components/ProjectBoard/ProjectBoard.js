@@ -4,10 +4,11 @@ import Backlog from './Backlog';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { getBacklog } from '../../actions/backlogActions';
-import { getUsersForSearchQuery, resetSearchedUsernames } from '../../actions/projectActions';
+import { getUsersForSearchQuery, resetSearchedUsernames, addUserToTeam, getProjectTeamMembers } from '../../actions/projectActions';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
+import { faPlusCircle, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 class ProjectBoard extends Component {
 
@@ -18,18 +19,11 @@ class ProjectBoard extends Component {
         this.state = {
              errors : {},
              showFindTeamMemberModel : false,
+             showTeamModel: false,
              searchQuery : "",
-             suggestions : []
+             suggestions : [],
+             teamMembers : []
         }
-
-        this.items=[
-            'Mani',
-            'Maxi',
-            'Watson',
-            'Ab deviliers',
-            'control',
-            'dummy'
-        ]
     }
 
     componentWillReceiveProps(nextProp){
@@ -39,11 +33,19 @@ class ProjectBoard extends Component {
         if(nextProp.userNames){
              this.setState(() => ({suggestions : nextProp.userNames}));
         }
+        if(nextProp.teamMembers){
+            this.setState(() => ({teamMembers : nextProp.teamMembers}));
+        }
     }    
 
     componentDidMount() {
         const {id} = this.props.match.params;
         this.props.getBacklog(id)
+        this.props.getProjectTeamMembers(id);
+    }
+
+    componentWillUnmount(){
+        this.props.resetSearchedUsernames();
     }
 
     onSearchQueryChange = (event) => {
@@ -62,6 +64,12 @@ class ProjectBoard extends Component {
         //console.log(this.props.userNames);
     }
 
+    addUserToTeamOnClick = (username) => {
+        const {id} = this.props.match.params;
+        this.props.addUserToTeam( id, username);
+        this.setState({showFindTeamMemberModel : false, searchQuery : ''})
+    }
+
     renderSuggestions = () => {
         const { suggestions } = this.state;
         if(!suggestions || suggestions.length === 0){
@@ -69,18 +77,37 @@ class ProjectBoard extends Component {
         }
         return (
             <ul>
-                {suggestions.map((username) => <li>{username}</li>)}
+                {suggestions.map((username) => <li key={username} onClick={(e) => this.addUserToTeamOnClick(username)}>{username}</li>)}
             </ul>
         )
     }
 
+    
+
     render() {
         const {id} = this.props.match.params;
         const {projectTasks} = this.props.backlog;
-        const {errors} = this.state;
+        const {errors, teamMembers} = this.state;
 
         let BoardContent;
         
+        const renderTeamDetails = () => {
+            
+            //console.log(teamMembers)
+            return (
+              <div>
+                {teamMembers.map(teamMember => (
+                <ListGroup.Item key={teamMember.username} variant="light">
+                  <Row >
+                    <Col>{teamMember.fullname}</Col>
+                    <Col>{teamMember.username}</Col>
+                  </Row>
+                </ListGroup.Item>
+                ))}
+              </div>
+            );
+        }
+
         const boardValidator = (errors, projectTasks) => {
             if(projectTasks.length < 1){
                 if(errors.projectNotFound){
@@ -110,7 +137,7 @@ class ProjectBoard extends Component {
         }
 
         BoardContent = boardValidator(errors, projectTasks)
-
+        
         return (
             <div>
           <div className="container">
@@ -119,6 +146,9 @@ class ProjectBoard extends Component {
             </Link>
             <Button className="btn btn-success mb-3  mt-3 ml-1" onClick={() => this.setState({showFindTeamMemberModel : true})}>
               <i className="cool-text"> <FontAwesomeIcon icon={faPlusCircle} /> Add team members</i>
+            </Button>
+            <Button className="btn btn-info mb-3  mt-3 ml-1" onClick={() => this.setState({showTeamModel : true})}>
+              <i className="cool-text"> <FontAwesomeIcon icon={faUsers} /> View team</i>
             </Button>
             <br />
             <hr />
@@ -148,7 +178,31 @@ class ProjectBoard extends Component {
             </div>
             </Modal.Body>
             <Modal.Footer>
-            <Button onClick={() => this.setState({showFindTeamMemberModel : false})}>Close</Button>
+            <Button onClick={() => {this.setState({showFindTeamMemberModel : false, searchQuery: ''}); this.props.resetSearchedUsernames();}}>Close</Button>
+            </Modal.Footer>
+            </Modal>
+            
+            <Modal
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={this.state.showTeamModel}
+            >
+            <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">
+                {this.props.match.params.id} - Project team
+            </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h6><Row><Col></Col><Col></Col></Row></h6>
+            <div>
+                {
+                    renderTeamDetails()
+                }
+            </div>
+            </Modal.Body>
+            <Modal.Footer>
+            <Button onClick={() => {this.setState({showTeamModel : false})}}>Close</Button>
             </Modal.Footer>
             </Modal>
             </div>
@@ -162,13 +216,17 @@ ProjectBoard.protoTypes = {
     getUsersForSearchQuery : PropTypes.func.isRequired,
     errors : PropTypes.object.isRequired,
     userNames : PropTypes.array.isRequired,
-    resetSearchedUsernames : PropTypes.func.isRequired
+    resetSearchedUsernames : PropTypes.func.isRequired,
+    addUserToTeam : PropTypes.func.isRequired,
+    getProjectTeamMembers : PropTypes.func.isRequired,
+    teamMembers : PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({
     backlog : state.backlog,
     errors : state.errors,
-    userNames : state.project.userNames
+    userNames : state.project.userNames,
+    teamMembers : state.project.teamMembers
 })
 
-export default connect(mapStateToProps, {getBacklog, getUsersForSearchQuery, resetSearchedUsernames}) (ProjectBoard);
+export default connect(mapStateToProps, {getBacklog, getUsersForSearchQuery, resetSearchedUsernames, addUserToTeam, getProjectTeamMembers}) (ProjectBoard);
