@@ -55,10 +55,17 @@ export const clearErrors = () => dispatch => {
 export const deleteProject = id => async dispatch => {
 
     if(window.confirm("Do you want to delete the project?")){
-        await axios.delete(`/api/project/${id}`);
-        dispatch({
-            type: DELETE_PROJECT,
-            payload: id
-        })
+        try{
+            await axios.delete(`/api/project/${id}`);
+            dispatch({
+                type: DELETE_PROJECT,
+                payload: id
+            })    
+        }catch(err){
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        }
     }
 }
